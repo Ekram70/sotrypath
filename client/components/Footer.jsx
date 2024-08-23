@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 
 const Footer = () => {
   return (
-    <div className="bg-blue-600">
+    <div className="bg-blue-600 clear-both">
       <Wrapper className="py-10">
         <div>
           <Image

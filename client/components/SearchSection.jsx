@@ -77,8 +77,11 @@ const SearchSection = () => {
                     <p>{card.description}</p>
                   </CardContent>
                   <CardFooter className="px-4">
-                    <Button className="inline-block rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600">
-                      Read More
+                    <Button
+                      className="inline-block rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600"
+                      asChild
+                    >
+                      <Link href={`/stories/${card.id}`}> Read More</Link>
                     </Button>
                   </CardFooter>
                 </Card>
@@ -91,7 +94,7 @@ const SearchSection = () => {
               className="mt-20 text-center rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600"
               asChild
             >
-              <Link href="/all">Load More</Link>
+              <Link href="/">Load More</Link>
             </Button>
           </div>
         </div>
