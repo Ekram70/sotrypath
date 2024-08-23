@@ -11,6 +11,9 @@ const barlow = Barlow({
 export const metadata = {
   title: 'Story Path',
   description: 'Interactive Storytelling Platform with Branching Narratives',
+  icons: {
+    icon: '/img/logo.png',
+  },
 };
 
 export default function RootLayout({ children }) {
