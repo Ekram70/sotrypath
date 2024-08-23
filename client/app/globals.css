@@ -61,7 +61,7 @@
 
 @layer utilities {
   .text-1 {
-    @apply font-medium text-[16px] leading-[20] text-slate-800;
+    @apply font-medium text-[16px] leading-[20px] text-slate-800;
   }
 
   .title-1 {

@@ -8,7 +8,7 @@ const HeroSection = () => {
         <div className="w-1/2 flex flex-col justify-center">
           <h2 className="title-1 !text-slate-800 mb-6">
             Dive into Interactive{' '}
-            <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r to-blue-900 from-sky-400">
               Storytelling
             </span>
           </h2>
