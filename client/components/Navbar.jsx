@@ -15,12 +15,16 @@ const Navbar = () => {
         <div className="flex gap-2">
           <Button
             variant="secondary"
-            className="inline-block rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600"
+            className="inline-block rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+            asChild
           >
-            Register Now
+            <Link href="/register"> Register Now</Link>
           </Button>
-          <Button className="inline-block rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600">
-            Sign In
+          <Button
+            className="inline-block rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
+            asChild
+          >
+            <Link href="/login">Sign In</Link>
           </Button>
         </div>
       </div>

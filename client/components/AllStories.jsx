@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from './ui/card';
 
-const SearchSection = () => {
+const AllStories = ({ search, heading }) => {
   const updatedData = cardData.map((card) => {
     return {
       ...card,
@@ -35,28 +35,30 @@ const SearchSection = () => {
         <div>
           <div>
             <h2 className="title-3 !font-bold uppercase text-center mb-8">
-              Find stories
+              {heading}
             </h2>
           </div>
-          <div className="flex justify-center mb-12">
-            <Input
-              type="text"
-              placeholder="Search Books"
-              className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-[500px]"
-            />
-            <Link href="#">
-              <Search className="border-4 border-l-0 border-blue-600 inline-block h-[40px] w-[40px] p-1 text-blue-600" />
-            </Link>
-          </div>
-          <div className="flex gap-4">
+          {search && (
+            <div className="flex justify-center mb-12">
+              <Input
+                type="text"
+                placeholder="Search Stories"
+                className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-[500px]"
+              />
+              <Link href="#">
+                <Search className="border-4 border-l-0 border-blue-600 inline-block h-[40px] w-[40px] p-1 text-blue-600" />
+              </Link>
+            </div>
+          )}
+          <div className="flex justify-between">
             {updatedData.map((card) => {
               return (
                 <Card
                   key={card.id}
-                  className="max-w-[300px] hover:shadow-md p-0 rounded-none"
+                  className="max-w-[280px] hover:shadow-md p-0 rounded-none"
                 >
                   <CardHeader className="p-0">
-                    <div className="w-[300px] h-[150px] overflow-hidden">
+                    <div className="w-[280px] h-[150px] overflow-hidden">
                       <Image
                         src={`${card.imgUrl}`}
                         width={300}
@@ -103,4 +105,4 @@ const SearchSection = () => {
   );
 };
 
-export default SearchSection;
+export default AllStories;

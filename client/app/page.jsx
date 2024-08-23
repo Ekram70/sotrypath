@@ -1,11 +1,11 @@
+import AllStories from '@/components/AllStories';
 import HeroSection from '@/components/HeroSection';
-import SearchSection from '@/components/SearchSection';
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
-      <SearchSection />
+      <AllStories search={true} heading="Find stories" />
     </main>
   );
 }
