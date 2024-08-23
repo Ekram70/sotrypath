@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Barlow } from 'next/font/google';
 import './globals.css';
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
       <body className={`${barlow.className} text-[#303133]`}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
