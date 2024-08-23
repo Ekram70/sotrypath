@@ -1,11 +1,11 @@
 import HeroSection from '@/components/HeroSection';
-import TopStories from '@/components/TopStories';
+import SearchSection from '@/components/SearchSection';
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
-      <TopStories />
+      <SearchSection />
     </main>
   );
 }
