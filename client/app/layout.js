@@ -1,6 +1,11 @@
-import { Nunito } from 'next/font/google';
+import Navbar from '@/components/Navbar';
+import { Barlow } from 'next/font/google';
+import './globals.css';
 
-const nunito = Nunito({ subsets: ['latin'], variable: '--font-nunito' });
+const barlow = Barlow({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+});
 
 export const metadata = {
   title: 'Story Path',
@@ -10,7 +15,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={nunito.className}>{children}</body>
+      <body className={`${barlow.className} text-[#303133]`}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,10 +1,9 @@
-import { Button } from '@/components/ui/button';
+import HeroSection from '@/components/HeroSection';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>Hello World</div>
-      <Button variant="outline">Button</Button>
+    <main>
+      <HeroSection />
     </main>
   );
 }
