@@ -7,6 +7,8 @@ const cardData = [
     After hours of navigating through thick foliage and crossing a bubbling brook, you arrive at a fork in the path. Here, your journey presents its first major decision.`,
     imgUrl:
       'https://t4.ftcdn.net/jpg/05/41/66/35/360_F_541663564_TUSOQROrrPZPkSZvdbXd6Wil5yCezuI7.jpg',
+    author: 'Random',
+    date: '24.08.2024',
   },
   {
     id: 2,
