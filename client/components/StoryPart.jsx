@@ -8,7 +8,7 @@ const StoryPart = ({ options, style, handleStoryPartChange }) => {
       {options?.map((option) => {
         return (
           <React.Fragment key={option.id}>
-            {option?.choice && (
+            {option.choice !== null && (
               <div className="flex flex-col w-[300px]">
                 <h6 className="small-2 !text-gray-600">Option Title</h6>
                 <input
@@ -28,7 +28,7 @@ const StoryPart = ({ options, style, handleStoryPartChange }) => {
               <div className="flex gap-4 items-center">
                 <Textarea
                   placeholder="Type your story here."
-                  className="rounded-none border border-blue-600 focus-visible:ring-0"
+                  className="rounded-none border border-blue-600 focus-visible:ring-0 w-[300px]"
                   value={`${option.storypart}`}
                   onChange={() =>
                     handleStoryPartChange(option, 'editStorypart')
@@ -41,13 +41,15 @@ const StoryPart = ({ options, style, handleStoryPartChange }) => {
                 >
                   Add Options
                 </Button>
-                <Button
-                  variant="secondary"
-                  className="border border-blue-600 rounded-none"
-                  onClick={() => handleStoryPartChange(option, 'remove')}
-                >
-                  Remove This
-                </Button>
+                {option.choice !== null && (
+                  <Button
+                    variant="secondary"
+                    className="border border-blue-600 rounded-none"
+                    onClick={() => handleStoryPartChange(option, 'remove')}
+                  >
+                    Remove This
+                  </Button>
+                )}
               </div>
             </div>
 

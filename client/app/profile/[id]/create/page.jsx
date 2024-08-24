@@ -17,6 +17,7 @@ const CreateStoryPage = () => {
     options: [
       {
         id: uuidv4(),
+        choice: null,
         storypart: ``,
         options: null,
       },
@@ -33,29 +34,55 @@ const CreateStoryPage = () => {
 
   const handleStoryPartChange = (storypart, actionType) => {
     if (actionType === 'add') {
-      setStory((prevStory) => {
-        return produce(prevStory, (draft) => {
-          const findAndUpdate = (obj) => {
-            if (!obj) return;
+      const updatedStory = produce(story, (draft) => {
+        const findAndAdd = (obj) => {
+          if (!obj) return;
 
-            if (obj?.id === storypart.id) {
-              if (obj.options === null) {
-                obj.options = [];
-              }
-              obj.options.push({
-                id: uuidv4(),
-                choice: ``,
-                storypart: ``,
-                options: null,
-              });
-            } else {
-              obj?.options?.map((option) => findAndUpdate(option));
+          if (obj?.id === storypart.id) {
+            if (obj.options === null) {
+              obj.options = [];
             }
-          };
+            obj.options.push({
+              id: uuidv4(),
+              choice: ``,
+              storypart: ``,
+              options: null,
+            });
 
-          findAndUpdate(draft.options[0]);
-        });
+            return;
+          } else {
+            obj?.options?.map((option) => findAndAdd(option));
+          }
+        };
+
+        findAndAdd(draft.options[0]);
       });
+
+      setStory(updatedStory);
+    }
+
+    if (actionType === 'remove') {
+      const updatedStory = produce(story, (draft) => {
+        const findAndDelete = (obj) => {
+          if (!obj?.options) return;
+
+          const idx = obj?.options?.findIndex(
+            (option) => option?.id === storypart.id
+          );
+
+          if (idx !== -1) {
+            obj.options.splice(idx, 1);
+
+            return;
+          } else {
+            obj?.options?.map((option) => findAndDelete(option));
+          }
+        };
+
+        findAndDelete(draft.options[0]);
+      });
+
+      setStory(updatedStory);
     }
   };
 
@@ -75,7 +102,7 @@ const CreateStoryPage = () => {
               className="px-2 py-1 outline-none border border-blue-600"
             />
           </div>
-          <div className="flex flex-col w-[550px]">
+          <div className="flex flex-col">
             {story.options.length > 0 && (
               <StoryPart
                 options={story.options}
