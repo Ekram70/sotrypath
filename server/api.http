@@ -1,0 +1,21 @@
+###
+
+POST http://localhost:5000/api/registration
+Content-Type: application/json
+
+{
+    "email": "ekramullah70@gmail.com",
+    "name": "Ekram Ullah",
+    "password": "12345678"
+}
+
+###
+
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "email": "ekramullah70@gmail.com",
+    "name": "Ekram Ullah",
+    "password": "12345678"
+}
