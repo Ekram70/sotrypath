@@ -32,6 +32,14 @@ const CreateStoryPage = () => {
     });
   };
 
+  const handleImageChange = (e) => {
+    setStory((prevStory) => {
+      return produce(prevStory, (draft) => {
+        draft.imgUrl = e.target.value;
+      });
+    });
+  };
+
   const handleStoryPartChange = (storypart, actionType, e) => {
     if (actionType === 'add') {
       const updatedStory = produce(story, (draft) => {
@@ -87,7 +95,7 @@ const CreateStoryPage = () => {
 
     if (actionType === 'edit') {
       const updatedStory = produce(story, (draft) => {
-        const findAndAdd = (obj) => {
+        const findAndUpdate = (obj) => {
           if (!obj) return;
 
           if (obj?.id === storypart.id) {
@@ -96,11 +104,11 @@ const CreateStoryPage = () => {
 
             return;
           } else {
-            obj?.options?.map((option) => findAndAdd(option));
+            obj?.options?.map((option) => findAndUpdate(option));
           }
         };
 
-        findAndAdd(draft.options[0]);
+        findAndUpdate(draft.options[0]);
       });
 
       setStory(updatedStory);
@@ -120,6 +128,18 @@ const CreateStoryPage = () => {
               value={`${story.title}`}
               onChange={(e) => handleTitleChange(e)}
               placeholder="Enter your story title"
+              className="px-2 py-1 outline-none border border-blue-600"
+            />
+          </div>
+          <div className="flex flex-col w-[300px]">
+            <h6 className="small-2 !text-gray-600">Image Url</h6>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={`${story.imgUrl}`}
+              onChange={(e) => handleImageChange(e)}
+              placeholder="Enter your story image"
               className="px-2 py-1 outline-none border border-blue-600"
             />
           </div>
