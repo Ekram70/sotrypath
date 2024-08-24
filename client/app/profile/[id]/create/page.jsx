@@ -32,7 +32,7 @@ const CreateStoryPage = () => {
     });
   };
 
-  const handleStoryPartChange = (storypart, actionType) => {
+  const handleStoryPartChange = (storypart, actionType, e) => {
     if (actionType === 'add') {
       const updatedStory = produce(story, (draft) => {
         const findAndAdd = (obj) => {
@@ -80,6 +80,27 @@ const CreateStoryPage = () => {
         };
 
         findAndDelete(draft.options[0]);
+      });
+
+      setStory(updatedStory);
+    }
+
+    if (actionType === 'edit') {
+      const updatedStory = produce(story, (draft) => {
+        const findAndAdd = (obj) => {
+          if (!obj) return;
+
+          if (obj?.id === storypart.id) {
+            if (e.target.type === 'text') obj.choice = e.target.value;
+            if (e.target.type === 'textarea') obj.storypart = e.target.value;
+
+            return;
+          } else {
+            obj?.options?.map((option) => findAndAdd(option));
+          }
+        };
+
+        findAndAdd(draft.options[0]);
       });
 
       setStory(updatedStory);

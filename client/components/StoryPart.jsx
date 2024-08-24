@@ -16,7 +16,7 @@ const StoryPart = ({ options, style, handleStoryPartChange }) => {
                   id="title"
                   name="title"
                   value={`${option.choice}`}
-                  onChange={() => handleStoryPartChange(option, 'editChoice')}
+                  onChange={(e) => handleStoryPartChange(option, 'edit', e)}
                   placeholder="Enter your story title"
                   className="px-2 py-1 outline-none border border-blue-600"
                 />
@@ -30,9 +30,7 @@ const StoryPart = ({ options, style, handleStoryPartChange }) => {
                   placeholder="Type your story here."
                   className="rounded-none border border-blue-600 focus-visible:ring-0 w-[300px]"
                   value={`${option.storypart}`}
-                  onChange={() =>
-                    handleStoryPartChange(option, 'editStorypart')
-                  }
+                  onChange={(e) => handleStoryPartChange(option, 'edit', e)}
                 />
                 <Button
                   variant="secondary"
