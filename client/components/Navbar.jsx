@@ -1,31 +1,111 @@
+'use client';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import Wrapper from './Wrapper';
 
-import { Button } from '@/components/ui/button';
-
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <Wrapper className="py-2">
-      <div className="flex justify-between">
-        <Link href="/" className="flex gap-3 items-center">
+    <Wrapper className="py-4 px-4 md:px-8">
+      <div className="flex justify-between items-center">
+        <Link
+          href="/"
+          className="flex gap-3 items-center"
+          onClick={closeMobileMenu}
+        >
           <Image src="/img/logo.png" alt="logo" width={35} height={50} />
           <h1 className="text-2xl font-bold">StoryPath</h1>
         </Link>
-        <div className="flex gap-2">
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden flex items-center text-blue-600"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d={
+                isMobileMenuOpen
+                  ? 'M6 18L18 6M6 6l12 12'
+                  : 'M4 6h16M4 12h16M4 18h16'
+              }
+            />
+          </svg>
+        </button>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-2">
           <Button
             variant="secondary"
-            className="inline-block rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+            className="rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
             asChild
           >
-            <Link href="/register"> Register Now</Link>
+            <Link href="/register">Register Now</Link>
           </Button>
           <Button
-            className="inline-block rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
+            className="rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
             asChild
           >
             <Link href="/login">Sign In</Link>
           </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed top-0 left-0 w-full h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+          isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
+        } md:hidden`}
+      >
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-xl font-bold">Menu</h2>
+          <button onClick={closeMobileMenu}>
+            <svg
+              className="w-6 h-6 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="flex flex-col gap-4 p-4">
+          <Link href="/register" onClick={closeMobileMenu}>
+            <Button
+              variant="secondary"
+              className="w-full rounded-none text-base text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+            >
+              Register Now
+            </Button>
+          </Link>
+          <Link href="/login" onClick={closeMobileMenu}>
+            <Button className="w-full rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600 leading-8">
+              Sign In
+            </Button>
+          </Link>
         </div>
       </div>
     </Wrapper>
