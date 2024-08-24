@@ -117,7 +117,7 @@ const CreateStoryPage = () => {
 
   return (
     <div>
-      <Wrapper>
+      <Wrapper className="py-4 px-4 md:px-8">
         <div className="space-y-4">
           <div className="flex flex-col w-[300px]">
             <h6 className="small-2 !text-gray-600">Title</h6>

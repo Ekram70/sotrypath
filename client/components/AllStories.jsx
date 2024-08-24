@@ -30,7 +30,7 @@ const AllStories = ({ search, heading }) => {
   });
 
   return (
-    <div>
+    <div className="px-4 md:px-8 lg:px-16">
       <Wrapper>
         <div>
           <div>
@@ -43,26 +43,26 @@ const AllStories = ({ search, heading }) => {
               <Input
                 type="text"
                 placeholder="Search Stories"
-                className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-[500px]"
+                className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-full max-w-[500px]"
               />
               <Link href="#">
                 <Search className="border-4 border-l-0 border-blue-600 inline-block h-[40px] w-[40px] p-1 text-blue-600" />
               </Link>
             </div>
           )}
-          <div className="flex justify-between">
+          <div className="flex justify-center items-center flex-wrap gap-6">
             {updatedData.map((card) => {
               return (
                 <Card
                   key={card.id}
-                  className="max-w-[280px] hover:shadow-md p-0 rounded-none"
+                  className="md:max-w-[280px] max-w-[500px]  hover:shadow-md p-0 rounded-none"
                 >
                   <CardHeader className="p-0">
-                    <div className="w-[280px] h-[150px] overflow-hidden">
+                    <div className="h-[250px] md:h-[150px] overflow-hidden">
                       <Image
                         src={`${card.imgUrl}`}
-                        width={300}
-                        height={300}
+                        width={580}
+                        height={150}
                         alt="the forest"
                       />
                     </div>

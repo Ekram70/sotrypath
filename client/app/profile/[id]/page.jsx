@@ -10,11 +10,9 @@ const ProfilePage = ({ params }) => {
 
   const [user] = userData.filter((user) => user.id == id);
 
-  
-
   return (
-    <Wrapper>
-      <div className="flex gap-4 items-center justify-between">
+    <Wrapper className="py-4 px-4 md:px-8">
+      <div className="flex gap-5 items-center justify-between flex-col sm:flex-row">
         <div className="flex gap-4 items-center">
           <div className="h-[100px] w-[100px] rounded-full overflow-hidden">
             <Image

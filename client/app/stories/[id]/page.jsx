@@ -7,21 +7,25 @@ const SingleStoryPage = ({ params }) => {
   const { id } = params;
 
   return (
-    <Wrapper>
-      <h2 className="title-1 !text-slate-800 underline decoration-blue-600 text-center mb-12">
+    <Wrapper className="px-4 md:px-8">
+      <h2 className="md:title-1 !text-slate-800 underline decoration-blue-600 text-center mb-12 text-5xl">
         {singleStoryData.title}
       </h2>
-      <div>
-        <Image
-          src={`${singleStoryData.imgUrl}`}
-          width={400}
-          height={400}
-          alt="the forest"
-          className="float-left mr-8 mb-8"
-        />
-        <p>{singleStoryData.options[0].storypart}</p>
-        <SingleStoryData data={singleStoryData.options[0].options} />
+      <div className="flex flex-col lg:flex-row">
+        <div className="flex items-center justify-center mb-8 md:mb-0 break-all">
+          <Image
+            src={`${singleStoryData.imgUrl}`}
+            width={500}
+            height={500}
+            alt="the forest"
+            className="md:min-w-[400px] h-full object-cover"
+          />
+        </div>
+        <p className="text-xl md:ml-8">
+          {singleStoryData.options[0].storypart}
+        </p>
       </div>
+      <SingleStoryData data={singleStoryData.options[0].options} />
     </Wrapper>
   );
 };

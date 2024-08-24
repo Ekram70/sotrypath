@@ -1,8 +1,6 @@
 'use client';
-
 import { produce } from 'immer';
-import { useState } from 'react';
-import { Button } from './ui/button';
+import React, { useState } from 'react';
 
 const SingleStoryData = ({ data }) => {
   const [storypart, setStorypart] = useState({
@@ -32,9 +30,9 @@ const SingleStoryData = ({ data }) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       {storypart.textArr.map((singleStoryPart, idx) => (
-        <div key={idx} className="mt-8">
+        <div key={idx} className="mt-8 text-xl">
           <p>{singleStoryPart}</p>
         </div>
       ))}
@@ -43,23 +41,22 @@ const SingleStoryData = ({ data }) => {
         {storypart.data && (
           <h4 className="title-3 my-8">Choose your story branch</h4>
         )}
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
+        <div className="space-y-2 px-8">
+          <div className="flex gap-4 justify-center flex-wrap space-x-2">
             {storypart.data &&
               storypart.data.map((singleOption) => (
-                <Button
+                <div
                   key={singleOption.id}
-                  variant="outline"
-                  className="inline-block rounded-none text-base text-blue-600  hover:text-white hover:bg-blue-600 border border-blue-600"
+                  className="border-[2px] text-base text-blue-600  hover:text-white hover:bg-blue-600 border-blue-600 py-2 px-3 font-bold"
                   onClick={() => addStoryPart(singleOption.id)}
                 >
-                  {singleOption.choice}
-                </Button>
+                  <p>{singleOption.choice}</p>
+                </div>
               ))}
           </div>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 
