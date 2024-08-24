@@ -10,6 +10,8 @@ const ProfilePage = ({ params }) => {
 
   const [user] = userData.filter((user) => user.id == id);
 
+  
+
   return (
     <Wrapper>
       <div className="flex gap-4 items-center justify-between">

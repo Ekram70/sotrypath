@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 
-const StoryPart = ({ options, style }) => {
+const StoryPart = ({ options, style, handleStoryPartChange }) => {
   return (
     <div className={`${style} space-y-5`}>
       {options?.map((option) => {
@@ -10,38 +10,52 @@ const StoryPart = ({ options, style }) => {
           <React.Fragment key={option.id}>
             {option?.choice && (
               <div className="flex flex-col w-[300px]">
-                <label htmlFor="title" className="small-2 !text-gray-600">
-                  Option Title
-                </label>
+                <h6 className="small-2 !text-gray-600">Option Title</h6>
                 <input
                   type="text"
                   id="title"
                   name="title"
                   value={`${option.choice}`}
+                  onChange={() => handleStoryPartChange(option, 'editChoice')}
                   placeholder="Enter your story title"
-                  className="bg-gray-100 px-2 py-1 focus-visible:ring-0 outline-1 outline-blue-600"
+                  className="px-2 py-1 outline-none border border-blue-600"
                 />
               </div>
             )}
 
             <div>
-              <label className="small-2 !text-gray-600">Storypart</label>
+              <h6 className="small-2 !text-gray-600">Storypart</h6>
               <div className="flex gap-4 items-center">
                 <Textarea
                   placeholder="Type your story here."
-                  className="rounded-none"
+                  className="rounded-none border border-blue-600 focus-visible:ring-0"
                   value={`${option.storypart}`}
+                  onChange={() =>
+                    handleStoryPartChange(option, 'editStorypart')
+                  }
                 />
                 <Button
                   variant="secondary"
                   className="border border-blue-600 rounded-none"
+                  onClick={() => handleStoryPartChange(option, 'add')}
                 >
                   Add Options
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="border border-blue-600 rounded-none"
+                  onClick={() => handleStoryPartChange(option, 'remove')}
+                >
+                  Remove This
                 </Button>
               </div>
             </div>
 
-            <StoryPart style="pl-10" options={option.options} />
+            <StoryPart
+              style="pl-10"
+              options={option.options}
+              handleStoryPartChange={handleStoryPartChange}
+            />
           </React.Fragment>
         );
       })}
