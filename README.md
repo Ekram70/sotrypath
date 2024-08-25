@@ -1,13 +1,8 @@
 # StoryPath
 
-Welcome to the **storypath** repository. **Storypath** is an interactive storytelling platform designed to engage users through dynamic and branching narratives. This platform allows users to both read and create stories with multiple pathways, driven by their choices. 
-
+Welcome to the **storypath** repository. **Storypath** is an interactive storytelling platform designed to engage users through dynamic and branching narratives. This platform allows users to both read and create stories with multiple pathways, driven by their choices.
 
 This project is a full-stack web application, consisting of a client-side (front-end) and a server-side (back-end). The project is organized into two main directories: `client` and `server`, each containing their own `package.json` file for managing dependencies.
-
-## Live Website
-
-You can access the live website here: [Storypath Front](https://storypath-front.vercel.app/)
 
 ## Getting Started
 
@@ -25,11 +20,15 @@ Make sure you have Node.js and npm installed on your system.
    git clone https://github.com/your-username/your-repository.git
    cd your-repository
 
+   ```
+
 2. **Install dependencies for the client:**
 
    ```bash
    cd client
    npm install
+
+   ```
 
 3. **Install dependencies for the server:**
 
@@ -37,20 +36,23 @@ Make sure you have Node.js and npm installed on your system.
    cd ../server
    npm install
 
+   ```
 
 4. **Return to the root directory:**
 
    ```bash
    cd ..
 
+   ```
+
 5. **Running the Project:**
-   
+
    Start the client:
 
    ```bash
    npm run client
+   ```
 
 ## Environment Variables
 
 Environment variables are required for both the client and server. For preview purposes, .env files are provided in their respective directories, but it's recommended to securely manage these variables in a production environment.
-
