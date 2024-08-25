@@ -14,7 +14,7 @@ require('dotenv').config();
 // logging HTTP requests
 app.use(morgan('combined'));
 
-// Configure CORS to allow all origins
+app.use(credentials);
 
 // CORS configuration function
 const corsOptions = {
@@ -27,8 +27,6 @@ const corsOptions = {
   },
   credentials: true,
 };
-
-app.use(credentials);
 
 // Use CORS middleware with the configured options
 app.use(cors(corsOptions));
