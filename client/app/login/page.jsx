@@ -50,7 +50,11 @@ const LoginPage = () => {
   }, [isAuthenticated, router]);
 
   if (loading) {
-    return <Loader className="animate-spin" />;
+    return (
+      <div className="p-4 flex justify-center">
+        <Loader size={64} className="animate-spin" />
+      </div>
+    );
   }
 
   return (

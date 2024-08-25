@@ -89,7 +89,12 @@ const AllStories = ({ heading, user }) => {
     setShowStories(stories);
   };
 
-  if (loading) return <Loader className="animate-spin" />;
+  if (loading)
+    return (
+      <div className="p-4 flex justify-center">
+        <Loader size={64} className="animate-spin" />
+      </div>
+    );
   if (error) return <p>{error}</p>;
 
   return (
