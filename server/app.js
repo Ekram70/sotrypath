@@ -5,7 +5,8 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
-
+const allowedOrigins = require('./src/config/allowedOrigins');
+const credentials = require('./src/middlewares/credentials');
 const publicDirectoryPath = path.join(__dirname, './public');
 
 require('dotenv').config();
@@ -14,13 +15,6 @@ require('dotenv').config();
 app.use(morgan('combined'));
 
 // Configure CORS to allow all origins
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5000',
-  'https://sotrypath-front.vercel.app/',
-  process.env.ORIGIN,
-];
 
 // CORS configuration function
 const corsOptions = {
@@ -33,6 +27,8 @@ const corsOptions = {
   },
   credentials: true,
 };
+
+app.use(credentials);
 
 // Use CORS middleware with the configured options
 app.use(cors(corsOptions));
