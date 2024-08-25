@@ -16,6 +16,7 @@ const {
   createStory,
   getAllStories,
   getSingleStory,
+  getStoriesByEmail,
 } = require('../controllers/StoriesController');
 
 router.post('/register', registration);
@@ -27,5 +28,6 @@ router.get('/getUser', authVerify, getUser);
 router.post('/story', authVerify, createStory);
 router.get('/getAllStories', getAllStories);
 router.get('/stories/:id', getSingleStory);
+router.get('/findstories', authVerify, getStoriesByEmail);
 
 module.exports = router;

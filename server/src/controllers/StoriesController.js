@@ -61,4 +61,32 @@ const getSingleStory = async (req, res) => {
   }
 };
 
-module.exports = { createStory, getAllStories, getSingleStory };
+const getStoriesByEmail = async (req, res) => {
+  try {
+    const { email } = req.user;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required.' });
+    }
+
+    const stories = await Story.find({ email });
+
+    if (!stories.length) {
+      return res
+        .status(404)
+        .json({ message: 'No stories found for this email.' });
+    }
+
+    res.status(200).json(stories);
+  } catch (error) {
+    console.error('Error fetching stories by email:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = {
+  createStory,
+  getAllStories,
+  getSingleStory,
+  getStoriesByEmail,
+};

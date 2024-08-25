@@ -18,7 +18,7 @@ import {
   CardTitle,
 } from './ui/card';
 
-const AllStories = ({ heading }) => {
+const AllStories = ({ heading, user }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,10 +26,14 @@ const AllStories = ({ heading }) => {
 
   useEffect(() => {
     const fetchStories = async () => {
+      const reqUrl = user
+        ? `${process.env.BASE_URL}/findstories`
+        : `${process.env.BASE_URL}/getAllStories`;
+
       try {
-        const response = await axios.get(
-          `${process.env.BASE_URL}/getAllStories`
-        );
+        const response = await axios.get(reqUrl, {
+          withCredentials: true,
+        });
         setStories(response.data);
         setShowStories(response.data);
       } catch (err) {
@@ -41,7 +45,7 @@ const AllStories = ({ heading }) => {
     };
 
     fetchStories();
-  }, []);
+  }, [user]);
 
   const handleSearchStories = (e) => {
     const filteredStories = stories.filter((story) => {
