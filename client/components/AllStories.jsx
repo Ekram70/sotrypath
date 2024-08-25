@@ -22,7 +22,8 @@ const AllStories = ({ heading, user }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  let [showStories, setShowStories] = useState([]);
+  const [showStories, setShowStories] = useState([]);
+  const [isLoadBtn, setIsLoadBtn] = useState(true);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -34,8 +35,11 @@ const AllStories = ({ heading, user }) => {
         const response = await axios.get(reqUrl, {
           withCredentials: true,
         });
-        setStories(response.data);
-        setShowStories(response.data);
+
+        const data = response.data;
+        setStories([...data]);
+        data.length = 4;
+        setShowStories(data);
       } catch (err) {
         setError('Failed to fetch stories.');
         console.error(err);
@@ -80,11 +84,16 @@ const AllStories = ({ heading, user }) => {
     setShowStories(filteredStories);
   };
 
+  const handleLoadAllStories = () => {
+    setIsLoadBtn(false);
+    setShowStories(stories);
+  };
+
   if (loading) return <Loader className="animate-spin" />;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="px-4 md:px-8 lg:px-16">
+    <div className="px-4 sm:px-8 md:px-12 lg:px-16">
       <Wrapper>
         <div>
           <div>
@@ -157,13 +166,15 @@ const AllStories = ({ heading, user }) => {
             })}
           </div>
           <div className="text-center">
-            <Button
-              variant="secondary"
-              className="mt-20 text-center rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600"
-              asChild
-            >
-              <Link href="/">Load More</Link>
-            </Button>
+            {isLoadBtn && (
+              <Button
+                variant="secondary"
+                className="mt-20 text-center rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600"
+                onClick={handleLoadAllStories}
+              >
+                Load More
+              </Button>
+            )}
           </div>
         </div>
       </Wrapper>
