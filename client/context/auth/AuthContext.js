@@ -1,11 +1,5 @@
 import axios from 'axios';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { SET_AUTHENTICATED } from './actionTypes';
 import initialState from './initialState';
 import reducer from './reducer';
@@ -18,8 +12,6 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -44,8 +36,6 @@ export const AuthProvider = ({ children }) => {
           type: SET_AUTHENTICATED,
           payload: { isAuthenticated: false, user: null },
         });
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -57,8 +47,6 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: state.isAuthenticated,
     user: state.user,
   };
-
-  if (loading) return null;
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
