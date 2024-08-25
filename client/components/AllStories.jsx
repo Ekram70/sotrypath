@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import convertDate from '@/lib/convertDate';
 import axios from 'axios';
-import { Loader, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -20,7 +20,6 @@ import {
 
 const AllStories = ({ heading, user }) => {
   const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showStories, setShowStories] = useState([]);
   const [isLoadBtn, setIsLoadBtn] = useState(true);
@@ -43,8 +42,6 @@ const AllStories = ({ heading, user }) => {
       } catch (err) {
         setError('Failed to fetch stories.');
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -53,8 +50,6 @@ const AllStories = ({ heading, user }) => {
 
   const handleDelete = async (id) => {
     try {
-      setLoading(true);
-
       const response = await axios.delete(
         `${process.env.BASE_URL}/stories/${id}`,
         {
@@ -70,8 +65,6 @@ const AllStories = ({ heading, user }) => {
     } catch (error) {
       setError('Failed to delete story.');
       console.error('Error deleting story:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -89,7 +82,6 @@ const AllStories = ({ heading, user }) => {
     setShowStories(stories);
   };
 
-  if (loading) return <Loader className="animate-spin" />;
   if (error) return <p>{error}</p>;
 
   return (
