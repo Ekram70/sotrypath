@@ -1,8 +1,12 @@
+'use client';
+
 import { Input } from '@/components/ui/input';
-import cardData from '@/public/data/cardData';
-import { Search } from 'lucide-react';
+import convertDate from '@/lib/convertDate';
+import axios from 'axios';
+import { Loader, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Wrapper from './Wrapper';
 import { Button } from './ui/button';
 import {
@@ -15,19 +19,30 @@ import {
 } from './ui/card';
 
 const AllStories = ({ search, heading }) => {
-  const updatedData = cardData.map((card) => {
-    return {
-      ...card,
-      title:
-        card.title.length > 20
-          ? card.title.substring(0, 20) + '...'
-          : card.title,
-      description:
-        card.description.length > 180
-          ? card.description.substring(0, 180) + '...'
-          : card.description,
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.BASE_URL}/getAllStories`
+        );
+        setStories(response.data);
+      } catch (err) {
+        setError('Failed to fetch stories.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
-  });
+
+    fetchStories();
+  }, []);
+
+  if (loading) return <Loader className="animate-spin" />;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="px-4 md:px-8 lg:px-16">
@@ -51,16 +66,16 @@ const AllStories = ({ search, heading }) => {
             </div>
           )}
           <div className="flex justify-center items-center flex-wrap gap-6">
-            {updatedData.map((card) => {
+            {stories.map((story) => {
               return (
                 <Card
-                  key={card.id}
+                  key={story.id}
                   className="md:max-w-[280px] max-w-[500px]  hover:shadow-md p-0 rounded-none"
                 >
                   <CardHeader className="p-0">
                     <div className="h-[250px] md:h-[150px] overflow-hidden">
                       <Image
-                        src={`${card.imgUrl}`}
+                        src={`${story.imgUrl}`}
                         width={580}
                         height={150}
                         alt="the forest"
@@ -68,22 +83,24 @@ const AllStories = ({ search, heading }) => {
                     </div>
                     <div className="px-4 py-2">
                       <CardTitle className="text-[22px] mb-1">
-                        {card.title}
+                        {story.title.substring(0, 20) + '...'}
                       </CardTitle>
                       <CardDescription className="small-2 !font-normal !text-gray-600">
-                        {card.author} | {card.date}
+                        {story.author} | {convertDate(story.createdAt)}
                       </CardDescription>
                     </div>
                   </CardHeader>
                   <CardContent className="p-4">
-                    <p>{card.description}</p>
+                    <p>
+                      {story.options[0].storypart.substring(0, 180) + '...'}
+                    </p>
                   </CardContent>
                   <CardFooter className="px-4">
                     <Button
                       className="inline-block rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600"
                       asChild
                     >
-                      <Link href={`/stories/${card.id}`}> Read More</Link>
+                      <Link href={`/stories/${story._id}`}> Read More</Link>
                     </Button>
                   </CardFooter>
                 </Card>

@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
           });
         }
       } catch (error) {
-        console.log(error);
         dispatch({
           type: SET_AUTHENTICATED,
           payload: { isAuthenticated: false, user: null },
