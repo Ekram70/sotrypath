@@ -52,6 +52,12 @@ Make sure you have Node.js and npm installed on your system.
    ```bash
    npm run client
    ```
+   
+   Start the server:
+
+   ```bash
+   npm run server
+   ```
 
 ## Environment Variables
 
