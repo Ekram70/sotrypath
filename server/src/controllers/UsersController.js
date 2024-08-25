@@ -34,7 +34,7 @@ const registration = async (req, res) => {
 
     // Generate a JWT token for the user
     const token = jwt.sign(
-      { id: newUser._id, email: newUser.email },
+      { id: newUser._id, email: newUser.email, name: newUser.name },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -77,7 +77,7 @@ const login = async (req, res) => {
 
     // Generate a JWT token for the user
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id, email: user.email, name: user.name },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -115,8 +115,33 @@ const logout = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  const { email } = req.user;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+    const user = await UsersModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({
+      user: { email: user.email, name: user.name },
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: 'Error retrieving user', error: err.message });
+  }
+};
+
 module.exports = {
   registration,
   login,
   logout,
+  getUser,
 };

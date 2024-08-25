@@ -18,3 +18,13 @@ Content-Type: application/json
     "email": "ekramullah70@gmail.com",
     "password": "12345678"
 }
+
+###
+
+GET  http://localhost:5000/api/getAllStories
+
+
+###
+
+GET  http://localhost:5000/api/stories/66cb3d17bd854eb845abe1ea
+
