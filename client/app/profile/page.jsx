@@ -4,7 +4,7 @@ import AllStories from '@/components/AllStories';
 import Wrapper from '@/components/Wrapper';
 import { useAuthDetails } from '@/context/auth/AuthContext';
 
-import userData from '@/public/data/userData';
+import axios from 'axios';
 import { Loader, MoveUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,24 +14,40 @@ import { useEffect, useState } from 'react';
 const ProfilePage = ({ params }) => {
   const { id } = params;
 
-  const user = userData[0];
-
   const { dispatch, isAuthenticated } = useAuthDetails();
-
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/');
     } else {
-      setLoading(false);
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`${process.env.BASE_URL}/getUser`, {
+            withCredentials: true,
+          });
+
+          setUser(response.data.user);
+
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchUserData();
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, id]);
 
   if (loading) {
     return <Loader className="animate-spin" />;
+  }
+
+  if (!user) {
+    return <p>Loading user data failed. Please try again later.</p>;
   }
 
   return (
@@ -40,7 +56,7 @@ const ProfilePage = ({ params }) => {
         <div className="flex gap-4 items-center">
           <div className="h-[100px] w-[100px] rounded-full overflow-hidden">
             <Image
-              src={`${user.picture}`}
+              src={`https://avatar.iran.liara.run/public/boy?username=Ash`}
               height={100}
               width={100}
               alt="profile"
@@ -48,7 +64,7 @@ const ProfilePage = ({ params }) => {
           </div>
           <div>
             <h2 className="title-3">{user.name}</h2>
-            <p>Total Story Created: {user.stories.length}</p>
+            <p>Email: {user.email}</p>
           </div>
         </div>
         <div>

@@ -5,7 +5,6 @@ import Wrapper from '@/components/Wrapper';
 import { login } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
 import { Loader } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -106,9 +105,6 @@ const LoginPage = () => {
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             <Button type="submit" className="rounded-none px-6 sm:px-8">
               Login
-            </Button>
-            <Button variant="link" asChild>
-              <Link href="/">Forgot Password?</Link>
             </Button>
           </div>
         </form>
