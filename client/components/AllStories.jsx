@@ -18,10 +18,11 @@ import {
   CardTitle,
 } from './ui/card';
 
-const AllStories = ({ search, heading }) => {
+const AllStories = ({ heading }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  let [showStories, setShowStories] = useState([]);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -30,6 +31,7 @@ const AllStories = ({ search, heading }) => {
           `${process.env.BASE_URL}/getAllStories`
         );
         setStories(response.data);
+        setShowStories(response.data);
       } catch (err) {
         setError('Failed to fetch stories.');
         console.error(err);
@@ -40,6 +42,15 @@ const AllStories = ({ search, heading }) => {
 
     fetchStories();
   }, []);
+
+  const handleSearchStories = (e) => {
+    const filteredStories = stories.filter((story) => {
+      if (story.title.toLowerCase().includes(e.target.value.toLowerCase())) {
+        return story;
+      }
+    });
+    setShowStories(filteredStories);
+  };
 
   if (loading) return <Loader className="animate-spin" />;
   if (error) return <p>{error}</p>;
@@ -53,20 +64,22 @@ const AllStories = ({ search, heading }) => {
               {heading}
             </h2>
           </div>
-          {search && (
-            <div className="flex justify-center mb-12">
-              <Input
-                type="text"
-                placeholder="Search Stories"
-                className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-full max-w-[500px]"
-              />
-              <Link href="#">
-                <Search className="border-4 border-l-0 border-blue-600 inline-block h-[40px] w-[40px] p-1 text-blue-600" />
-              </Link>
-            </div>
-          )}
+
+          <div className="flex justify-center mb-12">
+            <Input
+              type="text"
+              placeholder="Search Stories"
+              className="rounded-none bg-transparent border-4 border-blue-600 outline-none focus-visible:ring-0 w-full max-w-[500px]"
+              onChange={handleSearchStories}
+            />
+            <Link href="#">
+              <Search className="border-4 border-l-0 border-blue-600 inline-block h-[40px] w-[40px] p-1 text-blue-600" />
+            </Link>
+          </div>
+
           <div className="flex justify-center items-center flex-wrap gap-6">
-            {stories.map((story) => {
+            {showStories?.length === 0 && <div>No Stories Found</div>}
+            {showStories?.map((story) => {
               return (
                 <Card
                   key={story.id}

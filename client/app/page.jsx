@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-      <AllStories search={true} heading="Find stories" />
+      <AllStories heading="Find stories" />
     </main>
   );
 }

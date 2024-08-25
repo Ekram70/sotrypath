@@ -67,7 +67,7 @@ const ProfilePage = ({ params }) => {
           </div>
         </div>
       </div>
-      <AllStories search={false} heading="My previous stories" />
+      <AllStories heading="My previous stories" />
     </Wrapper>
   );
 };
