@@ -84,9 +84,31 @@ const getStoriesByEmail = async (req, res) => {
   }
 };
 
+const deleteStory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required.' });
+    }
+
+    const deletedStory = await Story.findByIdAndDelete(id);
+
+    if (!deletedStory) {
+      return res.status(404).json({ message: 'Story not found.' });
+    }
+
+    res.status(200).json({ message: 'Story deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting story:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   createStory,
   getAllStories,
   getSingleStory,
   getStoriesByEmail,
+  deleteStory,
 };

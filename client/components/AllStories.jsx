@@ -47,6 +47,30 @@ const AllStories = ({ heading, user }) => {
     fetchStories();
   }, [user]);
 
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true);
+
+      const response = await axios.delete(
+        `${process.env.BASE_URL}/stories/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        const updatedStories = stories.filter((story) => story._id !== id);
+        setStories(updatedStories);
+        setShowStories(updatedStories);
+      }
+    } catch (error) {
+      setError('Failed to delete story.');
+      console.error('Error deleting story:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearchStories = (e) => {
     const filteredStories = stories.filter((story) => {
       if (story.title.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -112,13 +136,21 @@ const AllStories = ({ heading, user }) => {
                       {story.options[0].storypart.substring(0, 180) + '...'}
                     </p>
                   </CardContent>
-                  <CardFooter className="px-4">
+                  <CardFooter className="px-4 flex justify-between">
                     <Button
                       className="inline-block rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600"
                       asChild
                     >
                       <Link href={`/stories/${story._id}`}> Read More</Link>
                     </Button>
+                    {user && (
+                      <Button
+                        className="inline-block rounded-none text-base text-white bg-red-600 border border-red-600 hover:bg-white hover:text-red-600"
+                        onClick={() => handleDelete(story._id)}
+                      >
+                        Delete
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
               );
