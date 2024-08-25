@@ -29,7 +29,12 @@ const corsOptions = {
 };
 
 // Use CORS middleware with the configured options
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://storypath-front.vercel.app/',
+    credentials: true,
+  })
+);
 
 // Middleware to parse data
 app.use(express.urlencoded({ extended: true }));
