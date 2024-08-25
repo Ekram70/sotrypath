@@ -14,7 +14,7 @@ require('dotenv').config();
 // logging HTTP requests
 app.use(morgan('combined'));
 
-app.use(credentials);
+// app.use(credentials);
 
 // CORS configuration function
 const corsOptions = {
@@ -29,7 +29,7 @@ const corsOptions = {
 };
 
 // Use CORS middleware with the configured options
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Middleware to parse data
 app.use(express.urlencoded({ extended: true }));
