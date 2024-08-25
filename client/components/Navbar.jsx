@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useToast } from './ui/use-toast';
 import Wrapper from './Wrapper';
 
 const Navbar = () => {
@@ -16,13 +17,27 @@ const Navbar = () => {
   const { dispatch, isAuthenticated } = useAuthDetails();
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
   const handleLogout = async () => {
-    await logout()(dispatch);
+    try {
+      await logout()(dispatch);
+      toast({
+        variant: 'success',
+        title: 'Logout Successful',
+        duration: 2000,
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Logout Failed',
+        duration: 2000,
+      });
+    }
   };
 
   return (

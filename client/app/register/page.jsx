@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import Wrapper from '@/components/Wrapper';
 import { register as registerAction } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
@@ -19,6 +20,8 @@ const RegisterPage = () => {
   } = useForm();
 
   const [loading, setLoading] = useState(true);
+
+  const { toast } = useToast();
 
   const onSubmit = async (data) => {
     try {
