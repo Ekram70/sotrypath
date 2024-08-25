@@ -31,7 +31,7 @@ const corsOptions = {
 // Use CORS middleware with the configured options
 app.use(
   cors({
-    origin: 'https://storypath-front.vercel.app/',
+    origin: 'https://storypath-front.vercel.app',
     credentials: true,
   })
 );
