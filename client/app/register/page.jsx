@@ -1,7 +1,18 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Wrapper from '@/components/Wrapper';
+import { useAuth } from '@/context/auth/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const RegisterPage = () => {
+  const isAuthenticated = useAuth();
+  const router = useRouter();
+
+  if (isAuthenticated) {
+    router.push('/');
+  }
+
   return (
     <Wrapper>
       <div className="px-4 sm:px-8 md:px-12 lg:px-16">

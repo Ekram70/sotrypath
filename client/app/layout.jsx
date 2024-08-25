@@ -1,5 +1,9 @@
+'use client';
+
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { Toaster } from '@/components/ui/toaster';
+import { AuthProvider } from '@/context/auth/AuthContext';
 import { Barlow } from 'next/font/google';
 import './globals.css';
 
@@ -8,21 +12,16 @@ const barlow = Barlow({
   subsets: ['latin'],
 });
 
-export const metadata = {
-  title: 'Story Path',
-  description: 'Interactive Storytelling Platform with Branching Narratives',
-  icons: {
-    icon: '/img/logo.png',
-  },
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${barlow.className} text-[#303133]`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Toaster />
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

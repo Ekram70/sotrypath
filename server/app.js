@@ -4,6 +4,7 @@ const router = require('./src/routes/api');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const cors = require('cors');
 
 const publicDirectoryPath = path.join(__dirname, './public');
 
@@ -11,6 +12,29 @@ require('dotenv').config();
 
 // logging HTTP requests
 app.use(morgan('combined'));
+
+// Configure CORS to allow all origins
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  process.env.ORIGIN,
+];
+
+// CORS configuration function
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+
+// Use CORS middleware with the configured options
+app.use(cors(corsOptions));
 
 // Middleware to parse data
 app.use(express.urlencoded({ extended: true }));

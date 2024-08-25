@@ -43,7 +43,7 @@ const registration = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
 
@@ -66,7 +66,7 @@ const login = async (req, res) => {
     // Find the user by email
     const user = await UsersModel.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Login failed' });
     }
 
     // Compare the provided password with the hashed password in the database
@@ -78,15 +78,14 @@ const login = async (req, res) => {
     // Generate a JWT token for the user
     const token = jwt.sign(
       { id: user._id, email: user.email },
-      'your_secret_key',
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
     // Set the JWT in an HTTP-only secure cookie
     res.cookie('token', token, {
-      httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
 
@@ -102,7 +101,22 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    res.clearCookie('token', {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+    });
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({ message: 'An error occurred during logout' });
+  }
+};
+
 module.exports = {
   registration,
   login,
+  logout,
 };

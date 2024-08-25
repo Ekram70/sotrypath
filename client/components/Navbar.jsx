@@ -1,15 +1,31 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { logout } from '@/context/auth/actions';
+import { useAuthDetails } from '@/context/auth/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Wrapper from './Wrapper';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const { dispatch, isAuthenticated } = useAuthDetails();
+
+  console.log(isAuthenticated);
+
+  const router = useRouter();
+  const { toast } = useToast();
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await logout()(dispatch);
   };
 
   return (
@@ -51,19 +67,39 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-2">
-          <Button
-            variant="secondary"
-            className="rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
-            asChild
-          >
-            <Link href="/register">Register Now</Link>
-          </Button>
-          <Button
-            className="rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
-            asChild
-          >
-            <Link href="/login">Sign In</Link>
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <Button
+                variant="secondary"
+                className="rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+                asChild
+              >
+                <Link href="/profile">View Profile</Link>
+              </Button>
+              <Button
+                className="rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="secondary"
+                className="rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+                asChild
+              >
+                <Link href="/register">Register Now</Link>
+              </Button>
+              <Button
+                className="rounded-none text-base text-white px-9 h-[52px] border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
+                asChild
+              >
+                <Link href="/login">Sign In</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -93,19 +129,44 @@ const Navbar = () => {
           </button>
         </div>
         <div className="flex flex-col gap-4 p-4">
-          <Link href="/register" onClick={closeMobileMenu}>
-            <Button
-              variant="secondary"
-              className="w-full rounded-none text-base text-blue-600 border border-transparent hover:border-blue-600 leading-8"
-            >
-              Register Now
-            </Button>
-          </Link>
-          <Link href="/login" onClick={closeMobileMenu}>
-            <Button className="w-full rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600 leading-8">
-              Sign In
-            </Button>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/profile" onClick={closeMobileMenu}>
+                <Button
+                  variant="secondary"
+                  className="w-full rounded-none text-base text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+                >
+                  View Profile
+                </Button>
+              </Link>
+
+              <Button
+                className="w-full rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600 leading-8"
+                onClick={() => {
+                  handleLogout();
+                  closeMobileMenu();
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/register" onClick={closeMobileMenu}>
+                <Button
+                  variant="secondary"
+                  className="w-full rounded-none text-base text-blue-600 border border-transparent hover:border-blue-600 leading-8"
+                >
+                  Register Now
+                </Button>
+              </Link>
+              <Link href="/login" onClick={closeMobileMenu}>
+                <Button className="w-full rounded-none text-base text-white border border-blue-600 hover:bg-white hover:text-blue-600 leading-8">
+                  Sign In
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </Wrapper>
