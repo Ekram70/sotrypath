@@ -15,8 +15,6 @@ const Navbar = () => {
 
   const { dispatch, isAuthenticated } = useAuthDetails();
 
-  console.log(isAuthenticated);
-
   const router = useRouter();
   const { toast } = useToast();
 

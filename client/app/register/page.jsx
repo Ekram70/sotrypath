@@ -2,15 +2,27 @@
 
 import { Button } from '@/components/ui/button';
 import Wrapper from '@/components/Wrapper';
-import { useAuth } from '@/context/auth/AuthContext';
+import { useAuthDetails } from '@/context/auth/AuthContext';
+import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const RegisterPage = () => {
-  const isAuthenticated = useAuth();
+  const { dispatch, isAuthenticated } = useAuthDetails();
   const router = useRouter();
 
-  if (isAuthenticated) {
-    router.push('/');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, router]);
+
+  if (loading) {
+    return <Loader className="animate-spin" />;
   }
 
   return (

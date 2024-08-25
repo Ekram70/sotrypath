@@ -5,8 +5,10 @@ import { useToast } from '@/components/ui/use-toast';
 import Wrapper from '@/components/Wrapper';
 import { login } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
+import { Loader } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const LoginPage = () => {
@@ -20,12 +22,22 @@ const LoginPage = () => {
   const { toast } = useToast();
   const { dispatch, isAuthenticated } = useAuthDetails();
 
+  const [loading, setLoading] = useState(true);
+
   const onSubmit = async (data) => {
     await login(data)(dispatch);
   };
 
-  if (isAuthenticated) {
-    router.push('/');
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, router]);
+
+  if (loading) {
+    return <Loader className="animate-spin" />;
   }
 
   return (

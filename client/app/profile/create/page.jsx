@@ -3,8 +3,11 @@
 import StoryPart from '@/components/StoryPart';
 import { Button } from '@/components/ui/button';
 import Wrapper from '@/components/Wrapper';
+import { useAuthDetails } from '@/context/auth/AuthContext';
 import { produce } from 'immer';
-import { useState } from 'react';
+import { Loader } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const CreateStoryPage = () => {
@@ -23,6 +26,24 @@ const CreateStoryPage = () => {
       },
     ],
   });
+
+  const { dispatch, isAuthenticated } = useAuthDetails();
+
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/');
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, router]);
+
+  if (loading) {
+    return <Loader className="animate-spin" />;
+  }
 
   const handleTitleChange = (e) => {
     setStory((prevStory) => {
