@@ -17,8 +17,8 @@ Make sure you have Node.js and npm installed on your system.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/Ekram70/storypath.git
+   cd storypath
 
    ```
 
