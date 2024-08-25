@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { logout } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
+import { MoveUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -65,6 +66,14 @@ const Navbar = () => {
         <div className="hidden md:flex gap-2">
           {isAuthenticated ? (
             <>
+              <div>
+                <h2 className="title-1 !text-[20px] flex items-center px-4 hover:underline hover:decoration-blue-600 hover:decoration-4">
+                  <span className="text-blue-600 leading-none py-4">
+                    <Link href="/profile/create">Create Story</Link>
+                  </span>
+                  <MoveUpRight className="text-blue-600" size={25} />
+                </h2>
+              </div>
               <Button
                 variant="secondary"
                 className="rounded-none text-base px-9 h-[52px] text-blue-600 border border-transparent hover:border-blue-600 leading-8"
@@ -127,6 +136,14 @@ const Navbar = () => {
         <div className="flex flex-col gap-4 p-4">
           {isAuthenticated ? (
             <>
+              <div className="mx-auto">
+                <h2 className="title-1 !text-[20px] flex items-center px-4 hover:underline hover:decoration-blue-600 hover:decoration-4">
+                  <span className="text-blue-600 leading-none py-4">
+                    <Link href="/profile/create">Create Story</Link>
+                  </span>
+                  <MoveUpRight className="text-blue-600" size={25} />
+                </h2>
+              </div>
               <Link href="/profile" onClick={closeMobileMenu}>
                 <Button
                   variant="secondary"

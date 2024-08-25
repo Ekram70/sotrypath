@@ -5,9 +5,8 @@ import Wrapper from '@/components/Wrapper';
 import { useAuthDetails } from '@/context/auth/AuthContext';
 
 import axios from 'axios';
-import { Loader, MoveUpRight } from 'lucide-react';
+import { Loader } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -66,14 +65,6 @@ const ProfilePage = ({ params }) => {
             <h2 className="title-3">{user.name}</h2>
             <p>Email: {user.email}</p>
           </div>
-        </div>
-        <div>
-          <h2 className="title-1 !text-[20px] flex items-center border-4 border-blue-600 px-4 hover:underline hover:decoration-blue-600 hover:decoration-4">
-            <span className="text-blue-600 leading-none py-4">
-              <Link href="/profile/create">Create Story</Link>
-            </span>
-            <MoveUpRight className="text-blue-600" size={25} />
-          </h2>
         </div>
       </div>
       <AllStories search={false} heading="My previous stories" />

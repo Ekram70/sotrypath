@@ -16,7 +16,6 @@ const CreateStoryPage = () => {
   const [story, setStory] = useState({
     id: uuidv4(),
     title: '',
-    imgUrl: '',
     options: [
       {
         id: uuidv4(),
@@ -64,7 +63,7 @@ const CreateStoryPage = () => {
   };
 
   const validateStory = (story) => {
-    if (!story.title.trim() || !story.imgUrl.trim()) {
+    if (!story.title.trim()) {
       return false;
     }
 
@@ -97,8 +96,14 @@ const CreateStoryPage = () => {
       return;
     }
 
+    const randomNumber = Math.floor(Math.random() * 11);
+
+    const data = produce(story, (draft) => {
+      draft.imgUrl = `https://picsum.photos/${300 + randomNumber}`;
+    });
+
     try {
-      await axios.post(`${process.env.BASE_URL}/story`, story, {
+      await axios.post(`${process.env.BASE_URL}/story`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -206,18 +211,6 @@ const CreateStoryPage = () => {
               value={`${story.title}`}
               onChange={(e) => handleTitleChange(e)}
               placeholder="Enter your story title"
-              className="px-2 py-1 outline-none border border-blue-600"
-            />
-          </div>
-          <div className="flex flex-col w-[300px]">
-            <h6 className="small-2 !text-gray-600">Image Url</h6>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={`${story.imgUrl}`}
-              onChange={(e) => handleImageChange(e)}
-              placeholder="Enter your story image"
               className="px-2 py-1 outline-none border border-blue-600"
             />
           </div>
