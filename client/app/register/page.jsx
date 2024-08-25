@@ -21,7 +21,20 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(true);
 
   const onSubmit = async (data) => {
-    await registerAction(data)(dispatch);
+    try {
+      await registerAction(data)(dispatch);
+      toast({
+        variant: 'success',
+        title: 'Registration Successful',
+        duration: 2000,
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Registration Failed',
+        duration: 2000,
+      });
+    }
   };
 
   useEffect(() => {

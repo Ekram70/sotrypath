@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import Wrapper from '@/components/Wrapper';
 import { login } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
@@ -16,13 +17,28 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
+  const { toast } = useToast();
+
   const router = useRouter();
   const { dispatch, isAuthenticated } = useAuthDetails();
 
   const [loading, setLoading] = useState(true);
 
   const onSubmit = async (data) => {
-    await login(data)(dispatch);
+    try {
+      await login(data)(dispatch);
+      toast({
+        variant: 'success',
+        title: 'Login Successful',
+        duration: 2000,
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Login Failed',
+        duration: 2000,
+      });
+    }
   };
 
   useEffect(() => {
