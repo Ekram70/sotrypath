@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 import { logout } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
 import Image from 'next/image';
@@ -16,7 +15,6 @@ const Navbar = () => {
   const { dispatch, isAuthenticated } = useAuthDetails();
 
   const router = useRouter();
-  const { toast } = useToast();
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);

@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 import Wrapper from '@/components/Wrapper';
 import { login } from '@/context/auth/actions';
 import { useAuthDetails } from '@/context/auth/AuthContext';
@@ -19,7 +18,6 @@ const LoginPage = () => {
   } = useForm();
 
   const router = useRouter();
-  const { toast } = useToast();
   const { dispatch, isAuthenticated } = useAuthDetails();
 
   const [loading, setLoading] = useState(true);
@@ -110,7 +108,7 @@ const LoginPage = () => {
               Login
             </Button>
             <Button variant="link" asChild>
-              <Link href="/profile/1">Forgot Password?</Link>
+              <Link href="/">Forgot Password?</Link>
             </Button>
           </div>
         </form>

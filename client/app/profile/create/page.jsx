@@ -2,8 +2,10 @@
 
 import StoryPart from '@/components/StoryPart';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import Wrapper from '@/components/Wrapper';
 import { useAuthDetails } from '@/context/auth/AuthContext';
+import axios from 'axios';
 import { produce } from 'immer';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -13,8 +15,6 @@ import { v4 as uuidv4 } from 'uuid';
 const CreateStoryPage = () => {
   const [story, setStory] = useState({
     id: uuidv4(),
-    author: '',
-    date: '',
     title: '',
     imgUrl: '',
     options: [
@@ -30,6 +30,8 @@ const CreateStoryPage = () => {
   const { dispatch, isAuthenticated } = useAuthDetails();
 
   const router = useRouter();
+
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState(true);
 
@@ -59,6 +61,61 @@ const CreateStoryPage = () => {
         draft.imgUrl = e.target.value;
       });
     });
+  };
+
+  const validateStory = (story) => {
+    if (!story.title.trim() || !story.imgUrl.trim()) {
+      return false;
+    }
+
+    const validateOptions = (options) => {
+      return options.every((option) => {
+        if (option.options) {
+          return validateOptions(option.options);
+        }
+
+        if (option.choice === null) return true;
+
+        if (!option.choice.trim() || !option.storypart.trim()) {
+          return false;
+        }
+
+        return true;
+      });
+    };
+
+    return validateOptions(story.options);
+  };
+
+  const handleSave = async () => {
+    if (!validateStory(story)) {
+      toast({
+        variant: 'destructive',
+        title: 'Plese enter value into every field',
+        duration: 2000,
+      });
+      return;
+    }
+
+    try {
+      await axios.post(`${process.env.BASE_URL}/story`, story, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+        withCredentials: true,
+      });
+
+      toast({
+        variant: 'success',
+        title: 'Story Successfully Saved',
+        duration: 2000,
+      });
+
+      router.push('/profile');
+    } catch (error) {
+      console.error('Error saving story:', error);
+    }
   };
 
   const handleStoryPartChange = (storypart, actionType, e) => {
@@ -173,7 +230,9 @@ const CreateStoryPage = () => {
             )}
           </div>
           <div>
-            <Button className="rounded-none">Save</Button>
+            <Button className="rounded-none" onClick={handleSave}>
+              Create Story
+            </Button>
           </div>
         </div>
       </Wrapper>
